@@ -3,13 +3,13 @@
 #include "kernel.h"
 
 struct thr_arg {
-	unsigned char *dst;
-	unsigned char *src;
+	unsigned char *restrict dst;
+	unsigned char *restrict src;
 	int cols;
 	int rows;
 };
 
-void sobel(unsigned char *dst, unsigned char *src, int cols, int rows)
+void sobel(unsigned char *restrict dst, unsigned char *restrict src, int cols, int rows)
 {
 	int sumx, sumy, idx;
 	for (int r = 1; r <= rows-2; ++r) {
@@ -47,7 +47,7 @@ void *sobel_thr(void *arg)
 	return NULL;
 }
 
-void sobel_mt(unsigned char *dst, unsigned char *src, int cols, int rows)
+void sobel_mt(unsigned char *restrict dst, unsigned char *restrict src, int cols, int rows)
 {
 	pthread_t thr0, thr1;
 	static struct thr_arg arg0, arg1;
