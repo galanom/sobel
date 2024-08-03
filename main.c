@@ -3,11 +3,10 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-//include <errno.h>
 #include <string.h>
 #include <time.h>
 
-void sobel_plain(unsigned char *dst, unsigned char *src, int cols, int rows);
+#include "sobel.h"
 
 int main(int argc, char *argv[]) {
 	if (argc != 4) {
@@ -60,7 +59,7 @@ int main(int argc, char *argv[]) {
 	double dt;
 
 	clock_gettime(CLOCK_MONOTONIC, &t0);
-	sobel_plain(image_dst, image_src, cols, rows);
+	sobel_mt(image_dst, image_src, cols, rows);
 	clock_gettime(CLOCK_MONOTONIC, &t1);
 	dt  = (t1.tv_sec - t0.tv_sec)*1e3 + (t1.tv_nsec - t0.tv_nsec)/1e6;
 	printf("Execution time: %6.4f\n", dt);
