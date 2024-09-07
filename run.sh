@@ -28,5 +28,6 @@ for (( i=0; i < ${#items[@]}; i+=3 )); do
 	fi
 done
 
-./main ${img} ${cols} ${rows}
+make -C sobel_sw
+./sobel_sw/main ${img} ${cols} ${rows}
 which octave && octave --eval "show(\"${img}\", ${cols}, ${rows})"
