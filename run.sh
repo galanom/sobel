@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-DIR="$(realpath $(dirname ${BASH_SOURCE[0]})/)"
-
+DIR="$(realpath $(dirname ${BASH_SOURCE[0]})/../)"
 files=($(ls -1 ${DIR}/img/*raw 2>/dev/null))
 items=()
 for file in ${files[@]}; do
@@ -18,8 +17,7 @@ if [ "${selected}" == "${DIR}/img" ]; then
 	echo "User abort"
 	exit 1
 fi
-
-for (( i=0; i < ${#items[@]}; i+=3 )); do
+for (( i=0; i < ${#items[@]}; i+=2 )); do
 	if [ "${items[i]}" == $(basename "${selected}") ]; then
 		cols=$(echo "${items[i+1]}" | cut -d'x' -f1)
 		rows=$(echo "${items[i+1]}" | cut -d'x' -f2)
@@ -28,6 +26,6 @@ for (( i=0; i < ${#items[@]}; i+=3 )); do
 	fi
 done
 
-make -C sobel_sw
-./sobel_sw/main ${img} ${cols} ${rows}
+make
+./bin/sobel ${img} ${cols} ${rows}
 which octave && octave --eval "show(\"${img}\", ${cols}, ${rows})"
